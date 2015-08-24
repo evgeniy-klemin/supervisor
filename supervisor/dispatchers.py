@@ -465,7 +465,7 @@ class PInputDispatcher(PDispatcher):
 
     def __init__(self, process, channel, fd):
         PDispatcher.__init__(self, process, channel, fd)
-        self.input_buffer = ''
+        self.input_buffer = as_bytes('')
 
     def writable(self):
         if self.input_buffer and not self.closed:
@@ -487,7 +487,7 @@ class PInputDispatcher(PDispatcher):
                 self.flush()
             except OSError as why:
                 if why.args[0] == errno.EPIPE:
-                    self.input_buffer = ''
+                    self.input_buffer = as_bytes('')
                     self.close()
                 else:
                     raise
